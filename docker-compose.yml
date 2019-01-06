@@ -1,0 +1,29 @@
+version: '3'
+services:
+  pentaho:
+    image: "duda_bi"
+    ports:
+     - "8080:8080"
+    volumes:
+     - pentaho-solutions:/opt/pentaho/pentaho-server/pentaho-solutions/
+  
+  dawarehouse_postgres:
+    image: "postgres:latest"
+    volumes:
+      - data:/var/lib/postgresql/data
+    ports:
+      - "15432:5432"
+
+  webspoon:
+    image: "hiromuhota/webspoon"
+    ports:
+      - "8081:8080"
+    volumes:
+      - kettle:/root/.kettle
+      - pentaho:/root/.pentaho
+
+volumes:
+  pentaho:
+  pentaho-solutions:
+  kettle:
+  data:
